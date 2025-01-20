@@ -15,7 +15,7 @@ export const userPage = async(req:AppRequest,res:AppResponse)=>{
           
           
         if(req.session.isLogged){
-            res.render('user.ejs',{userId:req.params.id ,url,qrCodeUrl, session:req.session})
+            res.render('user',{userId:req.params.id ,url,qrCodeUrl, session:req.session})
         }else{
             res.redirect('/login')
         }

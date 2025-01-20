@@ -27,7 +27,7 @@ const userPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
     });
     if (req.session.isLogged) {
-        res.render('user.ejs', { userId: req.params.id, url, qrCodeUrl, session: req.session });
+        res.render('user', { userId: req.params.id, url, qrCodeUrl, session: req.session });
     }
     else {
         res.redirect('/login');
