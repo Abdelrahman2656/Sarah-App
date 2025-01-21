@@ -16,8 +16,10 @@ exports.sendMsg = exports.userPage = void 0;
 const Database_1 = require("../../../Database");
 const qrcode_1 = __importDefault(require("qrcode"));
 const userPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = req.session.userId || ((_a = req.user) === null || _a === void 0 ? void 0 : _a._id);
     let qrCodeUrl;
-    let url = `${req.protocol}://${req.get('host')}/user/${req.session.userId}`;
+    let url = `${req.protocol}://${req.get('host')}/user/${userId}`;
     yield qrcode_1.default.toDataURL(url)
         .then(url => {
         qrCodeUrl = url;
@@ -25,9 +27,10 @@ const userPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     })
         .catch(err => {
         console.error(err);
+        qrCodeUrl = null; // Set to null if QR code generation fails
     });
-    if (req.session.isLogged) {
-        res.render('user', { userId: req.params.id, url, qrCodeUrl, session: req.session });
+    if (req.isAuthenticated()) {
+        res.render('user', { userId: req.params.id, url, qrCodeUrl, session: req.session, user: req.user, authentication: req.isAuthenticated() });
     }
     else {
         res.redirect('/login');

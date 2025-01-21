@@ -6,6 +6,9 @@ import session from 'express-session'
 import path from 'path'
 import { dbconnection } from '../Database/dbconnection'
 import { homeRouter, loginRouter, logoutRouter, messageRouter, registerRouter, userRouter } from './modules'
+import passport from 'passport'
+import router from './utils/auth'
+
 let MongoDBStore= mongoSession(session)
 export const bootstrap= (app:Application , express:typeof import('express'))=>{
     
@@ -28,6 +31,11 @@ app.use(session({
 app.use(cors({
   origin: '*', 
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Use the auth router
+app.use(router);
 app.use(homeRouter)
 app.use(loginRouter)
 app.use(messageRouter)

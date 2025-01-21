@@ -2,6 +2,7 @@
 import express from 'express'
 import  { join, resolve } from 'path'
 import { bootstrap } from './src/bootstrap'
+// import auth from './src/utils/auth';
 
 const app = express()
 const port = process.env.PORT||3000

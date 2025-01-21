@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarahah</title>
+    <title>Sarah App</title>
     <link rel="shortcut icon" href="/img/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/all.min.css">
@@ -13,32 +13,35 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-custom navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/"><img src="img/logo300.png" width="54" alt=""> </a>
+            <a class="navbar-brand" href="/">
+                <img src="img/logo300.png" width="54" alt="">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     Menu <span class="navbar-toggler-icon"></span>
-    </button>
+                Menu <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
+                    <% if (!session?.isLogged && !authentication) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    <% } %>
 
-             <% if (!session?.isLogged) { %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-             <% } %>
-             <% if (session?.isLogged) { %>
-                <li class="nav-item">
-                    <a class="nav-link" >Hello <%= session.userName %></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-             <% } %>
+                    <% if (session?.isLogged || authentication) { %>
+                        <li class="nav-item">
+                            <a class="nav-link">Hello <%= session.userName || user.name %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    <% } %>
                 </ul>
-
             </div>
         </div>
     </nav>
+</body>
+</html>

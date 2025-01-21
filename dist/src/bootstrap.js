@@ -11,6 +11,8 @@ const express_session_1 = __importDefault(require("express-session"));
 const path_1 = __importDefault(require("path"));
 const dbconnection_1 = require("../Database/dbconnection");
 const modules_1 = require("./modules");
+const passport_1 = __importDefault(require("passport"));
+const auth_1 = __importDefault(require("./utils/auth"));
 let MongoDBStore = (0, connect_mongodb_session_1.default)(express_session_1.default);
 const bootstrap = (app, express) => {
     dotenv_1.default.config({ path: path_1.default.resolve('./config/.env') });
@@ -30,6 +32,10 @@ const bootstrap = (app, express) => {
     app.use((0, cors_1.default)({
         origin: '*',
     }));
+    app.use(passport_1.default.initialize());
+    app.use(passport_1.default.session());
+    // Use the auth router
+    app.use(auth_1.default);
     app.use(modules_1.homeRouter);
     app.use(modules_1.loginRouter);
     app.use(modules_1.messageRouter);

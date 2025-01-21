@@ -13,27 +13,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.messagePage = void 0;
-const Database_1 = require("../../../Database");
+const Database_1 = require("../../../Database"); // Adjust the import path as needed
 const qrcode_1 = __importDefault(require("qrcode"));
-//second step and third 
 const messagePage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let url = `${req.protocol}://${req.get('host')}/user/${req.session.userId}`;
+    var _a, _b;
+    const userId = req.session.userId || ((_a = req.user) === null || _a === void 0 ? void 0 : _a._id);
+    // Generate the URL for the QR code
+    const url = `${req.protocol}://${req.get('host')}/user/${userId}`;
+    // Generate the QR code
     let qrCodeUrl;
-    // With promises
-    yield qrcode_1.default.toDataURL(url)
-        .then(url => {
-        qrCodeUrl = url;
-        console.log(url);
-    })
-        .catch(err => {
-        console.error(err);
+    try {
+        qrCodeUrl = yield qrcode_1.default.toDataURL(url);
+        console.log('QR Code URL:', qrCodeUrl);
+    }
+    catch (err) {
+        console.error('Error generating QR code:', err);
+        qrCodeUrl = null; // Set to null if QR code generation fails
+    }
+    // Fetch messages for the logged-in user
+    const messages = yield Database_1.Message.find({ user: req.session.userId || ((_b = req.user) === null || _b === void 0 ? void 0 : _b._id), });
+    // Render the message page
+    res.render('message', {
+        session: req.session,
+        user: req.user,
+        url,
+        qrCodeUrl,
+        messages,
+        authentication: req.isAuthenticated()
     });
-    let messages = yield Database_1.Message.find({ user: req.session.userId });
-    if (req.session.isLogged) {
-        res.render('message', { session: req.session, url, qrCodeUrl, messages });
-    }
-    else {
-        res.redirect('/login');
-    }
 });
 exports.messagePage = messagePage;

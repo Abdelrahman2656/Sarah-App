@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleRegister = exports.registerPage = void 0;
 const Database_1 = require("../../../Database");
 const registerPage = (req, res) => {
-    res.render("register", { error: req.query.error, session: null });
+    res.render("register", { error: req.query.error, session: null, authentication: null });
 };
 exports.registerPage = registerPage;
 // signup

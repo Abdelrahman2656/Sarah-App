@@ -2,7 +2,9 @@ import { User } from "../../../Database";
 import { AppRequest, AppResponse } from "../../utils/types";
 
 export const loginPage = (req:AppRequest,res:AppResponse)=>{
-    res.render('login',{error:req.query.error,session:null})
+   
+    res.render('login',{error:req.query.error,session:null , authentication:null})
+   
 }
 export const handleLogin =async (req:AppRequest,res:AppResponse)=>{
     let {email,password}=req.body 

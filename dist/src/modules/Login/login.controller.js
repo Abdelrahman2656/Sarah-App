@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleLogin = exports.loginPage = void 0;
 const Database_1 = require("../../../Database");
 const loginPage = (req, res) => {
-    res.render('login', { error: req.query.error, session: null });
+    res.render('login', { error: req.query.error, session: null, authentication: null });
 };
 exports.loginPage = loginPage;
 const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

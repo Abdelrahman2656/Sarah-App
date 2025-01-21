@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = require("path");
 const bootstrap_1 = require("./src/bootstrap");
+// import auth from './src/utils/auth';
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 //config env
