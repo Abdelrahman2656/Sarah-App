@@ -7,7 +7,10 @@ interface message {
 }
 //schema 
 const messageSchema = new Schema<message>({
-    message:String,
+    message:{
+        type:String,
+        required:true
+    },
     user:String
 })
 //model

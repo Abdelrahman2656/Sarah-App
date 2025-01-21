@@ -4,7 +4,10 @@ exports.Message = void 0;
 const mongoose_1 = require("mongoose");
 //schema 
 const messageSchema = new mongoose_1.Schema({
-    message: String,
+    message: {
+        type: String,
+        required: true
+    },
     user: String
 });
 //model
