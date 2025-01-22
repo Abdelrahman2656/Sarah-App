@@ -21,16 +21,14 @@ export const messagePage = async (req: AppRequest, res: AppResponse) => {
 
     // Fetch messages for the logged-in user
     const messages = await Message.find({  user: req.session.userId || req.user?._id, });
-    if(!messages){
-      return res.redirect(`${url}?error=Incorrect Email Or Password`)
-    }
+  
 
     // Render the message page
     res.render('message', {
       session: req.session,
       user:req.user,
       url,
-      error:req.query.error,
+  
       qrCodeUrl,
       messages,
       authentication: req.isAuthenticated()

@@ -17,7 +17,7 @@ export const userPage = async(req:AppRequest,res:AppResponse)=>{
           
           
         if(req.isAuthenticated()){
-            res.render('user',{userId:req.params.id ,url,qrCodeUrl, session:req.session,user:req.user,authentication:req.isAuthenticated() })
+            res.render('user',{userId:req.params.id ,url,qrCodeUrl,     error:req.query.error,session:req.session,user:req.user,authentication:req.isAuthenticated() })
     
             
         }else{
@@ -26,11 +26,19 @@ export const userPage = async(req:AppRequest,res:AppResponse)=>{
 
 }
 export const sendMsg =async(req:AppRequest,res:AppResponse)=>{
-    //store id
-    req.body.user = req.params.id
-   
-    // add message
-    await Message.insertMany(req.body)
-    // redirect
-    res.redirect('/user/'+req.params.id)
+  const { message } = req.body; 
+
+  // Validate the message
+  if (!message || message.trim() === '') {
+    return res.redirect(`/user/${req.params.id}?error=Message cannot be empty`);
+  }
+
+  
+  req.body.user = req.params.id;
+
+  
+  await Message.insertMany(req.body);
+
+  // Redirect to the user's profile page
+  res.redirect(`/user/${req.params.id}`);
 }

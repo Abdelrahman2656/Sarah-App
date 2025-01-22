@@ -30,7 +30,7 @@ const userPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         qrCodeUrl = null; // Set to null if QR code generation fails
     });
     if (req.isAuthenticated()) {
-        res.render('user', { userId: req.params.id, url, qrCodeUrl, session: req.session, user: req.user, authentication: req.isAuthenticated() });
+        res.render('user', { userId: req.params.id, url, qrCodeUrl, error: req.query.error, session: req.session, user: req.user, authentication: req.isAuthenticated() });
     }
     else {
         res.redirect('/login');
@@ -38,11 +38,14 @@ const userPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.userPage = userPage;
 const sendMsg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //store id
+    const { message } = req.body;
+    // Validate the message
+    if (!message || message.trim() === '') {
+        return res.redirect(`/user/${req.params.id}?error=Message cannot be empty`);
+    }
     req.body.user = req.params.id;
-    // add message
     yield Database_1.Message.insertMany(req.body);
-    // redirect
-    res.redirect('/user/' + req.params.id);
+    // Redirect to the user's profile page
+    res.redirect(`/user/${req.params.id}`);
 });
 exports.sendMsg = sendMsg;

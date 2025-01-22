@@ -32,15 +32,11 @@ const messagePage = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     // Fetch messages for the logged-in user
     const messages = yield Database_1.Message.find({ user: req.session.userId || ((_b = req.user) === null || _b === void 0 ? void 0 : _b._id), });
-    if (!messages) {
-        return res.redirect(`${url}?error=Incorrect Email Or Password`);
-    }
     // Render the message page
     res.render('message', {
         session: req.session,
         user: req.user,
         url,
-        error: req.query.error,
         qrCodeUrl,
         messages,
         authentication: req.isAuthenticated()
