@@ -6,6 +6,9 @@
             <img src="/img/avatar.png" class="avatar " alt="">
 
         </a>
+        <% if (error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+           <% } %>
         <h3 class="py-2"><%= session.userName || user.name %> </h3>
         <div class="container w-50 m-auto">
             <form action="/sendMsg/<%= userId %>" method="post">
