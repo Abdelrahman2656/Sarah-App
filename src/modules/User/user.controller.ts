@@ -17,7 +17,7 @@ export const userPage = async(req:AppRequest,res:AppResponse)=>{
           
           
         if(req.isAuthenticated()){
-            res.render('user',{userId:req.params.id ,url,qrCodeUrl,     error:req.query.error,session:req.session,user:req.user,authentication:req.isAuthenticated() })
+            res.render('user',{userId:req.params.id ,url,qrCodeUrl, error:req.query.error,session:req.session,user:req.user,authentication:req.isAuthenticated() })
     
             
         }else{
