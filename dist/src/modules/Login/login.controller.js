@@ -22,6 +22,9 @@ const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     if (!userExist || !userExist.password == password) {
         return res.redirect('/login?error=Incorrect Email Or Password');
     }
+    if (userExist.googleId) {
+        return res.redirect('/login?error=You have to login with Google');
+    }
     req.session.isLogged = true;
     req.session.userId = userExist._id.toString();
     req.session.userName = userExist.name;

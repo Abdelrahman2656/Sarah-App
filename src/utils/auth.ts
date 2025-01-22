@@ -28,7 +28,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL:"http://localhost:3000/google/callback",
+      callbackURL:"https://sarah-app-gamma.vercel.app/google/callback",
       passReqToCallback: true,
     },
     async (
